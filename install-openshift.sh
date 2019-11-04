@@ -9,7 +9,7 @@ export DOMAIN=${DOMAIN:="$(curl -s ipinfo.io/ip).nip.io"}
 export USERNAME=${USERNAME:="$(whoami)"}
 export PASSWORD=${PASSWORD:=password}
 export VERSION=${VERSION:="3.11"}
-export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/gshipley/installcentos/master"}
+export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/jizg/installcentos/master"}
 export IP=${IP:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
 export API_PORT=${API_PORT:="8443"}
 export LETSENCRYPT=${LETSENCRYPT:="false"}
@@ -158,8 +158,9 @@ if [ "$memory" -lt "16777216" ]; then
 	export LOGGING="False"
 fi
 
-curl -o inventory.download $SCRIPT_REPO/inventory.ini
-envsubst < inventory.download > inventory.ini
+# curl -o inventory.download $SCRIPT_REPO/inventory.ini
+# envsubst < inventory.download > inventory.ini
+envsubst < inventory.ini > inventory.ini
 
 # add proxy in inventory.ini if proxy variables are set
 if [ ! -z "${HTTPS_PROXY:-${https_proxy:-${HTTP_PROXY:-${http_proxy}}}}" ]; then
@@ -229,7 +230,7 @@ oc adm policy add-cluster-role-to-user cluster-admin ${USERNAME}
 
 if [ "$PVS" = "true" ]; then
 
-	curl -o vol.yaml $SCRIPT_REPO/vol.yaml
+	# curl -o vol.yaml $SCRIPT_REPO/vol.yaml
 
 	for i in `seq 1 200`;
 	do
